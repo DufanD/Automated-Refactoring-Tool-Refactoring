@@ -1,6 +1,7 @@
 package com.finalproject.automated.refactoring.tool.refactoring.service;
 
 import com.finalproject.automated.refactoring.tool.model.MethodModel;
+import com.finalproject.automated.refactoring.tool.duplicate.code.detection.model.ClonePair;
 import lombok.NonNull;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface Refactoring {
                                                             @NonNull List<MethodModel> methodModels);
 
     Map<String, Map<String, List<MethodModel>>> refactoring(@NonNull Map<String, List<MethodModel>> methods);
+
+    void refactoringDuplicate(@NonNull String path, @NonNull List<ClonePair> clonePairs);
+
+    void refactoringDuplicate(@NonNull Map<String, List<ClonePair>> clonePairs);
 }

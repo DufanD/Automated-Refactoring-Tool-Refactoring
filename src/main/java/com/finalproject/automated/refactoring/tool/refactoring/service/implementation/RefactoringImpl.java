@@ -1,5 +1,6 @@
 package com.finalproject.automated.refactoring.tool.refactoring.service.implementation;
 
+import com.finalproject.automated.refactoring.tool.duplicate.code.detection.model.ClonePair;
 import com.finalproject.automated.refactoring.tool.extract.method.refactoring.service.ExtractMethod;
 import com.finalproject.automated.refactoring.tool.model.CodeSmellName;
 import com.finalproject.automated.refactoring.tool.model.MethodModel;
@@ -50,6 +51,19 @@ public class RefactoringImpl implements Refactoring {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, this::mergeResultPath));
     }
 
+    @Override
+    public void refactoringDuplicate(@NonNull String path, @NonNull List<ClonePair> clonePairs) {
+        clonePairs.parallelStream()
+                .forEach(clonePair -> doRefactoringDuplicate(path, clonePair));
+    }
+
+    @Override
+    public void refactoringDuplicate(@NonNull Map<String, List<ClonePair>> clonePairs) {
+        clonePairs.entrySet()
+                .parallelStream()
+                .forEach(clonePair -> refactoringDuplicate(clonePair.getKey(), clonePair.getValue()));
+    }
+
     private Map<String, List<MethodModel>> mergeResultPath(Map<String, List<MethodModel>> result1,
                                                            Map<String, List<MethodModel>> result2) {
         return Stream.concat(result1.entrySet().stream(), result2.entrySet().stream())
@@ -59,6 +73,14 @@ public class RefactoringImpl implements Refactoring {
     private void doRefactoring(String path, MethodModel methodModel,
                                Map<String, Map<String, List<MethodModel>>> refactoringFailures) {
         doExtractMethod(path, methodModel, refactoringFailures);
+    }
+
+    private void doRefactoringDuplicate(String path, ClonePair clonePair) {
+        doExtractMethodDuplicate(path, clonePair);
+    }
+
+    private void doExtractMethodDuplicate(String path, ClonePair clonePair) {
+        extractMethod.refactoringForDuplicate(path, clonePair);
     }
 
     private void doExtractMethod(String path, MethodModel methodModel,
