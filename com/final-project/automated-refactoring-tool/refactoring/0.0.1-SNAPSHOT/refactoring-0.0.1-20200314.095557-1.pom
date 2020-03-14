@@ -37,6 +37,11 @@
             <artifactId>extract-method-refactoring</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.final-project.automated-refactoring-tool</groupId>
+            <artifactId>duplicate-code-detection-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -54,6 +59,14 @@
         <repository>
             <id>Automated-Refactoring-Tool-Extract-Method-Refactoring</id>
             <url>https://raw.github.com/DufanD/Automated-Refactoring-Tool-Extract-Method-Refactoring/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>Automated-Refactoring-Tool-Duplicate-Code-Detection-Model</id>
+            <url>https://raw.github.com/DufanD/Automated-Refactoring-Tool-Duplicate-Code-Detection-Model/mvn-repo/</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
